@@ -38,8 +38,8 @@ export default {
 		sheet: false,
 		model: 0,
 		colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
-		sheet: { titles: { colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'] } },
-		detailData: { comments: [{ users_permissions_user: null }] },
+		titles: ['1', '2', '3', '4', '5'],
+		// sheet: { titles: { colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'] } },
 	}),
 	methods: {},
 }
