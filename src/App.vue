@@ -79,6 +79,8 @@ export default {
 		// header_logo_view,
 	},
 	data: () => ({
+		items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
+
 		drawer: !null,
 		drawer1: null,
 		// mini-variant: true,

@@ -8,27 +8,26 @@
 						<v-text-field counter="50" label="Name*"></v-text-field>
 						<v-text-field onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" counter="13" label="Phone*"></v-text-field>
 						<v-text-field label="예산*"> </v-text-field>
-						<v-menu v-model="menu1" :close-on-content-click="false" max-width="290">
+						<v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
 							<template v-slot:activator="{ on, attrs }">
-								<v-text-field
-									:value="computedDateFormattedMomentjs"
-									clearable
-									label="예상납품기한*"
-									readonly
-									v-bind="attrs"
-									v-on="on"
-									@click:clear="date = null"
-								></v-text-field>
+								<v-text-field v-model="date" label="예상납품기한" readonly v-bind="attrs" v-on="on"></v-text-field>
 							</template>
-							<v-date-picker v-model="date" @change="menu1 = false"></v-date-picker>
-						</v-menu>
-
-						<v-text-field placeholder="게시글 비밀번호*"></v-text-field>
+							<v-date-picker v-model="date" scrollable>
+								<v-spacer></v-spacer>
+								<v-btn text color="primary" @click="modal = false">
+									Cancel
+								</v-btn>
+								<v-btn text color="primary" @click="$refs.dialog.save(date)">
+									OK
+								</v-btn>
+							</v-date-picker>
+						</v-dialog>
+						<v-text-field type="password" placeholder="게시글 비밀번호*"></v-text-field>
 					</v-flex>
 					<v-flex xs6 class="question">
 						<v-text-field counter="50" label="Company*"></v-text-field>
 						<v-text-field counter="50" label="Email*"></v-text-field>
-						<v-select :items="items" label="의뢰타입*"></v-select>
+						<v-select :items="items" label="의뢰타입*" />
 						<v-text-field label="참고 URL"></v-text-field>
 					</v-flex>
 				</v-layout>
@@ -46,23 +45,14 @@
 </template>
 
 <script>
-import moment from 'moment'
-import { format, parseISO } from 'date-fns'
 export default {
 	data: () => ({
-		// https://github.com/date-fns/date-fns/blob/master/docs/upgradeGuide.md#string-arguments
-		date: format(parseISO(new Date().toISOString()), 'yyyy-MM-dd'),
-		menu1: false,
-		// menu2: false,
+		items: ['웹 개발 문의', '앱 개발 문의', '기타 문의'],
+		date: new Date().toISOString().substr(0, 10),
+		menu: false,
+		modal: false,
+		menu2: false,
 	}),
-	computed: {
-		computedDateFormattedMomentjs() {
-			return this.date ? moment(this.date).format('dddd, MMMM Do YYYY') : ''
-		},
-		computedDateFormattedDatefns() {
-			return this.date ? format(this.date, 'EEEE, MMMM do yyyy') : ''
-		},
-	},
 }
 </script>
 
@@ -93,9 +83,3 @@ export default {
 	width: 100%;
 }
 </style>
-
-<script>
-export default {}
-</script>
-
-<style></style>
