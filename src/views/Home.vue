@@ -2,31 +2,39 @@
 	<v-container class="home">
 		<v-img src="./image/header/banner.png" max-height="350" contain class="img_back"></v-img>
 		<v-layout class="sheet" row wrap>
-			<v-flex mt-5 px-2 xl3 lg4 md4 sm6 xs6 v-for="(title, i) in titles" :key="i">
-				<v-bottom-sheet v-model="sheet" persistent>
-					<template v-slot:activator="{ on, attrs }">
-						<v-carousel v-model="model" dark v-bind="attrs" v-on="on" class="slider" align="center">
-							<v-carousel-item v-for="(color, i) in colors" :key="color">
-								<v-sheet :color="color" height="100%" tile @click="sheet = true">
-									<v-row class="fill-height" align="center" justify="center">
-										<div class="display-3">Slide {{ i + 1 }}</div>
-									</v-row>
-								</v-sheet>
-							</v-carousel-item>
-						</v-carousel>
-					</template>
-					<v-layout>
-						<v-flex>
-							<v-sheet class="text-center" height="500px">
-								<div class="py-3">
-									This is a bottom sheet using the persistent prop
-									<v-btn class="v-icon notranslate material-icons theme--light" @click="sheet = !sheet"> </v-btn>
-								</div>
-							</v-sheet>
-						</v-flex>
-					</v-layout>
-				</v-bottom-sheet>
+			<v-flex mt-5 px-2 xl3 lg4 md4 sm6 xs6 v-for="title in titles" :key="title">
+				<template>
+					<v-carousel>
+						<v-carousel-item
+							v-for="(item, i) in items"
+							:key="i"
+							:src="item.src"
+							reverse-transition="fade-transition"
+							transition="fade-transition"
+							@click="sheet = true"
+						>
+						</v-carousel-item>
+					</v-carousel>
+				</template>
 			</v-flex>
+			<template>
+				<v-bottom-sheet v-model="sheet" persistent>
+					<v-sheet class="text-center" height="100%">
+						<v-btn class="mt-6" text color="error" @click="sheet = !sheet">
+							close
+						</v-btn>
+						<div class="py-3">
+							<v-img
+								v-for="(item, i) in items"
+								:key="i"
+								:src="item.src"
+								reverse-transition="fade-transition"
+								transition="fade-transition"
+							/>
+						</div>
+					</v-sheet>
+				</v-bottom-sheet>
+			</template>
 		</v-layout>
 	</v-container>
 </template>
@@ -37,8 +45,23 @@ export default {
 		drawer: !null,
 		sheet: false,
 		model: 0,
-		colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
 		titles: ['1', '2', '3', '4', '5'],
+		items: [
+			{
+				src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+			},
+			{
+				src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+			},
+			{
+				src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+			},
+			{
+				src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+			},
+		],
+
+		// colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
 		// sheet: { titles: { colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'] } },
 	}),
 	methods: {},

@@ -31,8 +31,6 @@
 							:event-color="getEventColor"
 							:type="type"
 							@click:event="showEvent"
-							@click:more="viewDay"
-							@click:date="viewDay"
 							@change="updateRange"
 						></v-calendar>
 						<v-menu v-model="selectedOpen" :close-on-content-click="false" :activator="selectedElement" offset-x>
@@ -73,9 +71,9 @@ export default {
 		type: 'month',
 		typeToLabel: {
 			month: 'Month',
-			week: 'Week',
-			day: 'Day',
-			'4day': '4 Days',
+			// week: 'Week',
+			// day: 'Day',
+			// '4day': '4 Days',
 		},
 		selectedEvent: {},
 		selectedElement: null,
