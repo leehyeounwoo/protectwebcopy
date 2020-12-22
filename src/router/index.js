@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import schedule from '../views/schedule'
 import contact from '../views/contact'
+import test from '../views/test'
 
 Vue.use(VueRouter)
 
@@ -29,6 +30,11 @@ const routes = [
 		path: '/contact',
 		name: 'contact',
 		component: contact,
+	},
+	{
+		path: '/test',
+		name: 'test',
+		component: test,
 	},
 ]
 

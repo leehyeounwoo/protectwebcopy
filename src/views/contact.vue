@@ -31,16 +31,36 @@
 						<v-text-field label="참고 URL"></v-text-field>
 					</v-flex>
 				</v-layout>
-				<v-layout> </v-layout>
 			</v-flex>
 			<v-flex> editor</v-flex>
 		</v-layout>
-		<!-- <v-layout class="search_box">
-			<v-text-field v-model="search" append-icon="mdi-magnify" label="Search" single-line hide-details></v-text-field>
+		<v-layout wrap class=" " style="margin: 70px 40px 70px 40px;">
+			<v-flex class="rounded-lg offset-xs9 xs3">
+				<v-text-field
+					v-model="search"
+					append-icon="mdi-magnify"
+					label="이름을 입력해주세요"
+					float="right"
+					single-line
+					hide-details
+					class="rounded-lg"
+					style="padding:0px; margin:0px; width:200px; margin-bottom:10px; border:solid 1px black; float:right; width:100%"
+				></v-text-field>
+			</v-flex>
+			<v-flex class="contact_left contact_box rounded-xl" xs12>
+				<div class="">예산 1000만원 이하</div>
+				<v-layout contact-text-1>
+					개발문의 합니다.
+				</v-layout>
+			</v-flex>
+			<v-flex class="contact_left contact_box rounded-xl" xs12>
+				<div class="">예산 1000만원 이하</div>
+				<v-layout contact-text-1>
+					개발문의 합니다.
+				</v-layout>
+			</v-flex>
 		</v-layout>
-		<v-layout class="text-center">
-			<v-pagination v-model="page" :length="1"></v-pagination>
-		</v-layout> -->
+		<v-pagination v-model="page" :length="1"></v-pagination>
 	</v-container>
 </template>
 
@@ -57,11 +77,27 @@ export default {
 </script>
 
 <style>
-.search_box {
-	border: 1px gray;
+.contact_box {
+	border: solid 1px black;
+	padding: 10px;
+	box-shadow: 10px 10px black;
+	margin-bottom: 20px;
+}
+.card {
+	min-width: 100% !important;
 	width: 100%;
-	float: right;
-	margin: 20px 20px 20px 20px;
+	padding: 0px !important;
+}
+.search {
+	border: 1px solid black;
+	margin-bottom: 12px;
+}
+.border {
+	border: 1px solid black;
+}
+.search_box {
+	border: solid 1px black;
+	box-shadow: 10px 10px black;
 }
 .contact_left {
 	border-right: solid black 1px;

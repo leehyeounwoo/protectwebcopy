@@ -11,29 +11,29 @@
 							:src="item.src"
 							reverse-transition="fade-transition"
 							transition="fade-transition"
-							@click="sheet = true"
+							@click="dialog = true"
+							v-on:click="$EventBus.$emit('history', title)"
 						>
 						</v-carousel-item>
 					</v-carousel>
 				</template>
 			</v-flex>
 			<template>
-				<v-bottom-sheet v-model="sheet" persistent>
-					<v-sheet class="text-center" height="100%">
-						<v-btn class="mt-6" text color="error" @click="sheet = !sheet">
-							close
-						</v-btn>
-						<div class="py-3">
-							<v-img
-								v-for="(item, i) in items"
-								:key="i"
-								:src="item.src"
-								reverse-transition="fade-transition"
-								transition="fade-transition"
-							/>
-						</div>
-					</v-sheet>
-				</v-bottom-sheet>
+				<v-dialog v-model="dialog" height="500px" width="100%" persistent color="#f5f5f5">
+					<v-carousel>
+						<v-carousel-item
+							v-for="(item, i) in items"
+							:key="i"
+							:src="item.src"
+							reverse-transition="fade-transition"
+							transition="fade-transition"
+							hide-delimiters
+						></v-carousel-item>
+					</v-carousel>
+					<v-btn class="dialog_cancel" text color="#f5f5f5" @click="dialog = !dialog">
+						<v-icon>mdi-window-close</v-icon>
+					</v-btn>
+				</v-dialog>
 			</template>
 		</v-layout>
 	</v-container>
@@ -42,10 +42,11 @@
 <script>
 export default {
 	data: () => ({
+		dialog: false,
 		drawer: !null,
 		sheet: false,
 		model: 0,
-		titles: ['1', '2', '3', '4', '5'],
+		titles: ['첫번째 게시물', '두번째 게시물', '세번째 게시물', '네번째 게시물', '다섯번째 게시물'],
 		items: [
 			{
 				src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
@@ -64,10 +65,13 @@ export default {
 		// colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'],
 		// sheet: { titles: { colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'] } },
 	}),
-	methods: {},
+	components: {},
 }
 </script>
 <style lang="scss" scope>
+.dialog_cancel {
+}
+
 .sheet {
 	padding-left: 15px;
 }
@@ -127,4 +131,3 @@ export default {
 	max-width: 100% !important;
 }
 </style>
-<style global></style>

@@ -31,67 +31,93 @@
 						</v-list-item-icon>
 						<v-list-item-title>문의하기</v-list-item-title>
 					</v-list-item>
-					<v-list style="font-size:.75rem align:center">
+					<v-list style="font-size:.75rem align:center" v-if="mini === false">
 						최근 본 포트폴리오
+
+						<!-- <v-list v-for="test in tests" :key="test" items="test" /> -->
+						<v-flex v-for="carousel in carousels" :key="carousel" :value="carousel" style="font-size:15px" @click="dialog = !dialog"
+							>{{ carousel }}
+						</v-flex>
+						<!-- <v-list v-for="carousel in carousels" :key="carousel" @click="dialog = true">{{ carousel }}</v-list> -->
+						<v-dialog v-model="dialog" height="500px" width="100%" persistent color="#f5f5f5">
+							<v-carousel>
+								<v-carousel-item
+									v-for="(item, i) in items"
+									:key="i"
+									:src="item.src"
+									reverse-transition="fade-transition"
+									transition="fade-transition"
+									hide-delimiters
+								></v-carousel-item>
+							</v-carousel>
+							<v-btn class="dialog_cancel" text color="#f5f5f5" @click="dialog = !dialog">
+								<v-icon>mdi-window-close</v-icon>
+							</v-btn>
+						</v-dialog>
 					</v-list>
 				</v-list>
 			</v-navigation-drawer>
-			<!-- <v-navigation-drawer appclass="navigation" class="navigation_left" v-model="drawer1">
-				<v-list class="">
-					<v-list-item @click="$router.push({ name: 'Home' })">
-						<v-list-item-icon>
-							<v-icon small color="black">mdi-trending-up</v-icon>
-						</v-list-item-icon>
-						<v-list-item-title>포트폴리오</v-list-item-title>
-					</v-list-item>
-					<v-list-item @click="$router.push({ name: 'schedule' })">
-						<v-list-item-icon>
-							<v-icon small>mdi-youtube-subscription</v-icon>
-						</v-list-item-icon>
-						<v-list-item-title>일정표</v-list-item-title>
-					</v-list-item>
-					<v-list-item @click="$router.push({ name: 'contact' })">
-						<v-list-item-icon>
-							<v-icon small>mdi-history</v-icon>
-						</v-list-item-icon>
-						<v-list-item-title>문의하기</v-list-item-title>
-					</v-list-item>
-					<v-list mini="false">
-						최근 본 포트폴리오
-					</v-list>
-				</v-list>
-			</v-navigation-drawer> -->
 
-			<!-- <v-flex class="navigation_left"> </v-flex> -->
 			<v-flex xs12 class="mainBoard">
 				<router-view></router-view>
 			</v-flex>
 		</v-layout>
-		<!-- <v-footer app></v-footer> -->
 	</v-app>
 </template>
 
 <script>
-// import { header_logo_view } from './views/header_logo_view'
 export default {
 	name: 'App',
 	components: {
 		// header_logo_view,
 	},
 	data: () => ({
-		items: ['Foo', 'Bar', 'Fizz', 'Buzz'],
-
+		dialog: false,
+		titles: ['1', '2', '3', '4', '5'],
+		items: [
+			{
+				src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+			},
+			{
+				src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
+			},
+			{
+				src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
+			},
+			{
+				src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
+			},
+		],
+		carousels: [],
+		tests: [],
 		drawer: !null,
 		drawer1: null,
-		// mini-variant: true,
+		history: [],
 		mini: true,
 	}),
+	created() {
+		this.carousels = new Array()
+		this.$EventBus.$on('history', value => {
+			console.log(value)
 
-	// 	methods: {
-	// 		mini_variant() {
-	// 			const mini-variant : false
-	// 		},
-	// 	},
+			this.test = value
+			this.carousels.push(this.test)
+			// console.log(this.carousels)
+		})
+
+		// console.log('test13' + this.test)
+		// this.carousels = new Array()
+		// this.carousels.push(this.test)
+		// console.log('car' + this.carousels)
+	},
+	mounted() {
+		this.carousels = []
+	},
+	methods: {
+		test1() {
+			this.dialog = true
+		},
+	},
 }
 </script>
 <style scoped>
