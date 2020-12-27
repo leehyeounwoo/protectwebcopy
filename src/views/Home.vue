@@ -2,7 +2,7 @@
 	<v-container class="home">
 		<v-img src="./image/header/banner.png" max-height="350" contain class="img_back"></v-img>
 		<v-layout class="sheet" row wrap>
-			<v-flex mt-5 px-2 xl3 lg4 md4 sm6 xs6 v-for="title in titles" :key="title">
+			<v-flex mt-5 px-2 xl3 lg4 md4 sm6 xs6 v-for="title in titles" :key="title" v-on:click="$EventBus.$emit('history', title)">
 				<template>
 					<v-carousel>
 						<v-carousel-item
@@ -12,7 +12,6 @@
 							reverse-transition="fade-transition"
 							transition="fade-transition"
 							@click="dialog = true"
-							v-on:click="$EventBus.$emit('history', title)"
 						>
 						</v-carousel-item>
 					</v-carousel>
@@ -40,11 +39,13 @@
 </template>
 
 <script>
+// import { RECENT_PORTFOLIO } from '../store/index'
 export default {
 	data: () => ({
 		dialog: false,
 		drawer: !null,
 		sheet: false,
+		carousel: [],
 		model: 0,
 		titles: ['첫번째 게시물', '두번째 게시물', '세번째 게시물', '네번째 게시물', '다섯번째 게시물'],
 		items: [
@@ -66,6 +67,14 @@ export default {
 		// sheet: { titles: { colors: ['red', 'deep-purple', 'cyan', 'green', 'orange', 'grey darken-1'] } },
 	}),
 	components: {},
+	// methods: {
+	// 	RECENT_PORTFOLIO() {
+	// 		this.$store.commit(RECENT_PORTFOLIO, this.title)
+	// 		console.log('이것은1:' + this.$store.Recent_Portfolio)
+	// 		this.$store.Recent_Portfolio = this.titles
+	// 		console.log('이것은2:' + this.$store.Recent_Portfolio)
+	// 	},
+	// },
 }
 </script>
 <style lang="scss" scope>

@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import schedule from '../views/schedule'
 import contact from '../views/contact'
-import test from '../views/test'
+import test from '../views/b'
 
 Vue.use(VueRouter)
 

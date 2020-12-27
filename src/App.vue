@@ -4,7 +4,7 @@
 			<img
 				src="../src/views/image/header/protect.png"
 				width="48"
-				style="margin-right:12px"
+				style="margin-right: 12px"
 				class="mml-2"
 				@click=";(mini = !mini), (drawer = !drawer)"
 			/>
@@ -35,7 +35,12 @@
 						최근 본 포트폴리오
 
 						<!-- <v-list v-for="test in tests" :key="test" items="test" /> -->
-						<v-flex v-for="carousel in carousels" :key="carousel" :value="carousel" style="font-size:15px" @click="dialog = !dialog"
+						<v-flex
+							v-for="carousel in carousels"
+							:key="carousel"
+							:value="carousel"
+							style="font-size: 20px; cursor: pointer; text-align: center; text-decoration: underline"
+							@click="dialog = !dialog"
 							>{{ carousel }}
 						</v-flex>
 						<!-- <v-list v-for="carousel in carousels" :key="carousel" @click="dialog = true">{{ carousel }}</v-list> -->
@@ -48,6 +53,7 @@
 									reverse-transition="fade-transition"
 									transition="fade-transition"
 									hide-delimiters
+									style="cursor: pointer"
 								></v-carousel-item>
 							</v-carousel>
 							<v-btn class="dialog_cancel" text color="#f5f5f5" @click="dialog = !dialog">

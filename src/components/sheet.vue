@@ -16,9 +16,7 @@
 		</v-bottom-sheet>
 		<v-sheet class="text-center" height="500px">
 			<v-btn class="v-icon notranslate material-icons theme--light" @click="sheet = !sheet"> </v-btn>
-			<div class="py-3">
-				This is a bottom sheet using the persistent prop
-			</div>
+			<div class="py-3">This is a bottom sheet using the persistent prop</div>
 		</v-sheet>
 	</div>
 </template>
