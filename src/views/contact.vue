@@ -31,14 +31,14 @@
 			</v-flex>
 			<v-flex>
 				<v-layout v-model="editor">editor</v-layout>
-				<v-text-field v-model="editor" />
+				<v-text-field style="height: 80%" v-model="editor" />
 
 				<v-layout>
-					<v-btn class="button" @click="onclick()">등록하기</v-btn>
+					<v-btn class="button" style="background: black; color: white; width: 100%; height: 70px" @click="onclick()">등록하기</v-btn>
 				</v-layout>
 			</v-flex>
 		</v-layout>
-		<v-layout wrap class=" " style="margin: 70px 40px 70px 40px">
+		<v-layout wrap class="" style="margin: 70px 40px 70px 40px">
 			<v-flex class="rounded-lg offset-xs9 xs3">
 				<v-text-field
 					v-model="search"
@@ -54,7 +54,6 @@
 			<v-flex class="contact_left contact_box rounded-xl" v-for="b in box" :key="b" xs12 @click="contact()">
 				<div class="">{{ $store.state.array[b - 1].name }}</div>
 				<v-layout contact-text-1>{{ $store.state.array[b - 1].type }} 입니다. </v-layout>
-				<setDialog3 v-model="dialog2" persistent />
 			</v-flex>
 		</v-layout>
 		<v-pagination v-model="page" :length="1"></v-pagination>
@@ -97,10 +96,13 @@
 					</v-layout>
 				</v-flex>
 				<v-flex>
-					<v-layout v-model="editor">editor</v-layout>
-					<v-layout> </v-layout>
-					<v-layout>
-						<v-btn class="button" @click="onclick(), (dialog2 = !dialog2)">수정하기</v-btn>
+					<v-layout>editor</v-layout>
+					<v-text-field style="height: 80%" v-model="editor" />
+
+					<v-layout class="button">
+						<v-btn style="background: black; color: white; width: 100%; height: 70px" @click="onclick(), (dialog2 = !dialog2)"
+							>수정하기</v-btn
+						>
 					</v-layout>
 				</v-flex>
 			</v-layout>
@@ -109,10 +111,17 @@
 </template>
 
 <script>
-import setDialog3 from '../components/dialog'
+import Vue from 'vue'
+
 import { CONTACT } from '../store/index'
+Vue.component('BaseModal', {
+	template: `
+  <v-layout>
+			<slot name="qustion"></slot>
+</v-layout>
+  `,
+})
 export default {
-	components: { setDialog3 },
 	data() {
 		return {
 			items: ['웹 개발 문의', '앱 개발 문의', '기타 문의'],
@@ -123,6 +132,7 @@ export default {
 			menu2: false,
 			dialog1: false,
 			dialog2: false,
+			commentID: '',
 
 			// name: '',
 			// phone: '',
@@ -179,6 +189,7 @@ export default {
 			// }
 			// this.$store.state.array.push({ editData })
 			this.$store.state.array.push({
+				id: this.box,
 				name: this.name,
 				phone: this.phone,
 				money: this.money,
@@ -190,6 +201,7 @@ export default {
 				url: this.url,
 				editor: this.editor,
 			})
+			this.commentID = this.$store.state.array.id
 			this.box = this.$store.state.array.length
 			console.log(this.$store.state.array)
 			// this.$store.state.array.push([
@@ -240,9 +252,7 @@ export default {
 .test {
 	background: white;
 }
-.button {
-	float: bottom;
-}
+
 .contact_box {
 	border: solid 1px black;
 	padding: 10px;
