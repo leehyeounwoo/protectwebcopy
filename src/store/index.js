@@ -30,10 +30,7 @@ export default new Vuex.Store({
 			},
 		],
 		Recent_Portfolio: [],
-		array: [
-			// { name: '111', phone: '111', money: '111', editor: '111' },
-			// { name: '222', phone: '222', money: '222', editor: '222' },
-		],
+		array: [],
 	},
 	mutations: {
 		[RECENT_PORTFOLIO](state) {

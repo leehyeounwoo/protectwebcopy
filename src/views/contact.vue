@@ -31,7 +31,7 @@
 			</v-flex>
 			<v-flex>
 				<v-layout v-model="editor">editor</v-layout>
-				<v-text-field style="height: 80%" v-model="editor" />
+				<textarea style="height: 80%; border: solid 1px black; width: 100%" v-model="editor" />
 
 				<v-layout>
 					<v-btn class="button" style="background: black; color: white; width: 100%; height: 70px" @click="onclick()">등록하기</v-btn>
@@ -51,8 +51,11 @@
 					style="padding: 0px; margin: 0px; width: 200px; margin-bottom: 10px; border: solid 1px black; float: right; width: 100%"
 				></v-text-field>
 			</v-flex>
-			<v-flex class="contact_left contact_box rounded-xl" v-for="b in box" :key="b" xs12 @click="contact()">
-				<div class="">{{ $store.state.array[b - 1].name }}</div>
+			<v-flex class="contact_left contact_box rounded-xl" v-for="(b, index) in box" :key="index" xs12 @click="contact(index)">
+				<v-layout wrap>
+					<v-flex>{{ $store.state.array[b - 1].name }} </v-flex>
+					<v-flex style="float: right">{{ $store.state.array[b - 1].date }} </v-flex>
+				</v-layout>
 				<v-layout contact-text-1>{{ $store.state.array[b - 1].type }} 입니다. </v-layout>
 			</v-flex>
 		</v-layout>
@@ -71,36 +74,36 @@
 
 					<v-layout contact-text-1>
 						<v-flex xs6 class="question">
-							<v-text-field counter="50" label="Name*" :value="$store.state.array.name"></v-text-field>
-							<v-text-field v-model="phone" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" counter="13" label="Phone*">
+							<v-text-field counter="50" label="Name*" v-model="edit_name"></v-text-field>
+							<v-text-field v-model="edit_phone" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');" counter="13" label="Phone*">
 							</v-text-field>
-							<v-text-field v-model="money" label="예산*">aaa </v-text-field>
+							<v-text-field v-model="edit_money" label="예산*"> </v-text-field>
 							<v-dialog ref="dialog" v-model="modal" :return-value.sync="date" persistent width="290px">
 								<template v-slot:activator="{ on, attrs }">
-									<v-text-field v-model="date" label="예상납품기한" readonly v-bind="attrs" v-on="on"></v-text-field>
+									<v-text-field v-model="edit_date" label="예상납품기한" readonly v-bind="attrs" v-on="on"></v-text-field>
 								</template>
-								<v-date-picker v-model="date" scrollable>
+								<v-date-picker v-model="edit_date" scrollable>
 									<v-spacer></v-spacer>
 									<v-btn text color="primary" @click="modal = false"> Cancel </v-btn>
 									<v-btn text color="primary" @click="$refs.dialog.save(date)"> OK </v-btn>
 								</v-date-picker>
 							</v-dialog>
-							<v-text-field v-model="password" type="password" placeholder="게시글 비밀번호*"></v-text-field>
+							<v-text-field v-model="edit_password" type="password" label="게시글 비밀번호*"></v-text-field>
 						</v-flex>
 						<v-flex xs6 class="question">
-							<v-text-field v-model="company" counter="50" label="Company*"></v-text-field>
-							<v-text-field v-model="email" counter="50" label="Email*"></v-text-field>
-							<v-select v-model="type" :items="items" label="의뢰타입*" />
-							<v-text-field v-model="url" label="참고 URL"></v-text-field>
+							<v-text-field v-model="edit_company" counter="50" label="Company*"></v-text-field>
+							<v-text-field v-model="edit_email" counter="50" label="Email*"></v-text-field>
+							<v-select v-model="edit_type" :items="items" label="의뢰타입*" />
+							<v-text-field v-model="edit_url" label="참고 URL"></v-text-field>
 						</v-flex>
 					</v-layout>
 				</v-flex>
 				<v-flex>
 					<v-layout>editor</v-layout>
-					<v-text-field style="height: 80%" v-model="editor" />
+					<textarea style="height: 80%; border: solid 1px black; width: 100%" v-model="editor" />
 
 					<v-layout class="button">
-						<v-btn style="background: black; color: white; width: 100%; height: 70px" @click="onclick(), (dialog2 = !dialog2)"
+						<v-btn style="background: black; color: white; width: 100%; height: 70px" @click="edit(index), (dialog2 = !dialog2)"
 							>수정하기</v-btn
 						>
 					</v-layout>
@@ -132,62 +135,20 @@ export default {
 			menu2: false,
 			dialog1: false,
 			dialog2: false,
-			commentID: '',
-
-			// name: '',
-			// phone: '',
-			// money: '',
-			box: '',
-			// password: '',
-			// company: '',
-			// email: '',
-			// type: '',
-			// url: '',
-			// editor: '',
-			// test: '',
-			// test1: '11',
+			box: this.$store.state.array.length,
+			view_password: '',
 		}
 	},
+	created: {},
 	methods: {
 		onclick() {
 			this.$store.commit(CONTACT)
-			// this.test = this.$store.state.array
-			// this.test1 = this.$store.state.array[0].name
-			// console.log(this.test1)
-			// console.log(this.test.length)
-			// this.$store.state.name = this.name
-			// this.$store.state.phone = this.phone
-			// this.$store.state.money = this.money
-			// this.$store.state.date = this.date
-			// this.$store.state.password = this.password
-			// this.$store.state.company = this.company
-			// this.$store.state.email = this.email
-			// this.$store.state.type = this.type
-			// this.$store.state.url = this.url
-			// this.$store.state.editor = this.editor
-			// this.boxs.push(this.name)
 
-			// console.log(this.box)
-			// console.log(this.$store.state.array[0].editor)
-			// console.log(this.box)
 			if (!this.name || !this.phone || !this.money || !this.password || !this.company || !this.email || !this.type)
 				return alert('*를 한번 더 확인해주세요')
 			console.log(this.name)
 
-			// const editData = {
-			// 	id: this.box,
-			// 	name: this.name,
-			// 	phone: this.phone,
-			// 	money: this.money,
-			// 	date: this.date,
-			// 	password: this.password,
-			// 	company: this.company,
-			// 	email: this.email,
-			// 	type: this.type,
-			// 	url: this.url,
-			// 	editor: this.editor,
-			// }
-			// this.$store.state.array.push({ editData })
+			this.box = this.$store.state.array.length
 			this.$store.state.array.push({
 				id: this.box,
 				name: this.name,
@@ -204,45 +165,57 @@ export default {
 			this.commentID = this.$store.state.array.id
 			this.box = this.$store.state.array.length
 			console.log(this.$store.state.array)
-			// this.$store.state.array.push([
-			// 	this.name,
-			// 'phone:' + this.phone,
-			// 'money:' + this.money,
-			// 'date:' + this.date,
-			// 'password:' + this.password,
-			// 'company:' + this.company,
-			// 'email:' + this.email,
-			// 'type:' + this.type,
-			// 'url:' + this.url,
-			// 'editor:' + this.editor,
-			// ])
-			// console.log(this.$store.state.array)
-			// Vue.set(this.$store.state.array, this.box, {this.name, this.editor})
-			// this.$store.state.array = Object.assign({}, this.$store.state.array, { name: this.name, editor: this.editor })
-			// console.log(this.$store.state.array)
+			this.name = ''
+			this.phone = ''
+			this.money = ''
+			this.date = ''
+			this.password = ''
+			this.company = ''
+			this.email = ''
+			this.type = ''
+			this.url = ''
+			this.editor = ''
 		},
-		contact() {
-			// this.name = this.$store.state.array[this.b - 1].name
-
-			// this.phone = this.$store.state.array[this.b - 1].phone
-			// this.money = this.$store.state.array[this.b - 1].money
-			// this.date = this.$store.state.array[this.b - 1].date
-			// this.password = this.$store.state.array[this.b - 1].password
-			// this.company = this.$store.state.array[this.b - 1].company
-			// this.email = this.$store.state.array[this.b - 1].email
-			// this.type = this.$store.state.array[this.b - 1].type
-			// this.url = this.$store.state.array[this.b - 1].url
-			// this.editor = this.$store.state.array[this.b - 1].editor
+		contact(index) {
 			this.dialog1 = !this.dialog1
-			console.log(this.$store.state.array)
+			console.log(this.$store.state.array[index].view_password)
+			this.edit_name = this.$store.state.array[index].name
+			this.edit_phone = this.$store.state.array[index].phone
+			this.edit_money = this.$store.state.array[index].money
+			this.edit_password = this.$store.state.array[index].password
+			this.edit_company = this.$store.state.array[index].company
+			this.edit_type = this.$store.state.array[index].type
+			this.edit_url = this.$store.state.array[index].url
+			this.edit_editor = this.$store.state.array[index].editor
+			this.edit_date = this.$store.state.array[index].date
+			this.edit_email = this.$store.state.array[index].email
+			this.edit_id = this.$store.state.array[index].id
+			this.view_password = ''
 		},
 		password_check() {
-			if (this.password === this.view_password) {
+			if (this.edit_password === this.view_password) {
 				this.dialog2 = !this.dialog2
 				this.dialog1 = !this.dialog1
+				console.log('password' + this.view_password)
+				this.view_password = ''
+				console.log('password1' + this.view_password)
 			} else {
 				alert('오류')
 			}
+		},
+		edit() {
+			console.log('ss' + this.edit_id)
+
+			this.$store.state.array[this.edit_id].name = this.edit_name
+			this.$store.state.array[this.edit_id].phone = this.edit_phone
+			this.$store.state.array[this.edit_id].money = this.edit_money
+			this.$store.state.array[this.edit_id].password = this.edit_password
+			this.$store.state.array[this.edit_id].company = this.edit_company
+			this.$store.state.array[this.edit_id].type = this.edit_type
+			this.$store.state.array[this.edit_id].url = this.edit_url
+			this.$store.state.array[this.edit_id].editor = this.edit_editor
+			this.$store.state.array[this.edit_id].date = this.edit_date
+			this.$store.state.array[this.edit_id].email = this.edit_email
 		},
 	},
 }
