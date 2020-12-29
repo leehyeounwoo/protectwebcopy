@@ -51,15 +51,21 @@
 					append-icon="mdi-magnify"
 					@click="search()"
 				>
-				</v-text-field
-				><v-btn @click="search_form()"> test</v-btn>
+				</v-text-field>
 			</v-flex>
-			<v-flex class="contact_left contact_box rounded-xl" v-for="(b, index) in box" :key="index" xs12 @click="contact(index)">
+			<v-flex
+				class="contact_left contact_box rounded-xl"
+				v-for="(b, index) in searchData"
+				:key="index"
+				v-show="searchData[index].name.includes(search)"
+				xs12
+				@click="contact(index)"
+			>
 				<v-layout wrap>
-					<v-flex v-model="test">{{ $store.state.array[b - 1].name }} </v-flex>
-					<v-flex style="float: right">{{ $store.state.array[b - 1].date }} </v-flex>
+					<v-flex>{{ searchData[index].name }} </v-flex>
+					<v-flex style="float: right">{{ searchData[index].date }} </v-flex>
 				</v-layout>
-				<v-layout contact-text-1>{{ $store.state.array[b - 1].type }} 입니다. </v-layout>
+				<v-layout contact-text-1>{{ searchData[index].type }} 입니다. </v-layout>
 			</v-flex>
 		</v-layout>
 		<v-pagination v-model="page" :length="1"></v-pagination>
@@ -256,13 +262,17 @@ export default {
 			this.name = ''
 			this.phone = ''
 			this.money = ''
-			this.date = ''
+
 			this.password = ''
 			this.company = ''
 			this.email = ''
 			this.type = ''
 			this.url = ''
 			this.editor = ''
+			this.searchData = this.$store.state.array
+
+			console.log('searchData')
+			console.log(this.searchData)
 		},
 		contact(index) {
 			this.dialog1 = !this.dialog1
@@ -296,9 +306,23 @@ export default {
 			this.$store.state.array[this.edit_id].email = this.edit_email
 		},
 		search_form() {
+			console.log(this.searchData)
+			console.log('test:: ' + this.searchData[0].name.indexOf('1'))
 			this.$store.commit(SEARCH_FORM)
 		},
 	},
+	// computed: {
+	// 	calData() {
+	// 		// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+	// 		this.searchData = this.listData
+	// 			.filter(function(data) => {
+	// 				return data.subject.toLowerCase().includes(this.search.toLowerCase())
+	// 			})
+	// 			.slice(0)
+
+	// 		return this.searchData.slice(this.startOffset, this.endOffset)
+	// 	},
+	// },
 	// computed: {
 	// 	filterBySize() {
 	// 		return this.$store.state.array.filter(function (item) {
@@ -311,14 +335,30 @@ export default {
 	// computed: {
 	// 	calData() {
 	// 		// eslint-disable-next-line vue/no-side-effects-in-computed-properties
+	// 		this.searchData = this.listData
+	// 			.filter((data) => {
+	// 				return data.subject.toLowerCase().includes(this.search.toLowerCase())
+	// 			})
+	// 			.slice(0)
+
+	// 		return this.searchData.slice(this.startOffset, this.endOffset)
+	// 	},
+	// 	calData() {
+	// 		// eslint-disable-next-line vue/no-side-effects-in-computed-properties
 	// 		this.searchData = this.$store.state.array
-	// 			.filter(data => {
-	// 				return data.name.toLowerCase().includes(this.search.toLowerCase())
+	// 			.filter(searchData => {
+	// 				return searchData.name.toLowerCase().includes(this.search.toLowerCase())
 	// 			})
 	// 			.slice(0)
 	// 		console.log(this.search.toLowerCase())
 	// 		return this.searchData.slice(this.startOffset, this.endOffset)
 	// 	},
+	// },
+	// filteredList() {
+	// 	return this.searchData.filter((searchData) => {
+	// 		return searchData.name.toLowerCase().includes(this.search.toLowerCase())
+	// 	})
+	// },
 	// },
 	// computed: {
 	// 	filteredList() {
