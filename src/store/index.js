@@ -5,6 +5,8 @@ export const NEW_PHOTOPOLLIO = 'NEW_PHOTOPOLLIO'
 export const RECENT_PORTFOLIO = 'RECENT_PORTFOLIO'
 export const CONTACT = 'CONTACT'
 export const TEST = 'TEST'
+export const SEARCH_FORM = 'SEARCH_FORM'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -48,6 +50,11 @@ export default new Vuex.Store({
 		[CONTACT](state) {
 			state.test
 			console.log('index' + state.name)
+		},
+		[SEARCH_FORM](state) {
+			state
+			console.log('name' + state.array[2].name)
+			console.log(state.array.findIndex(i => i.name == '111'))
 		},
 	},
 	actions: {},

@@ -19,6 +19,7 @@ module.exports = {
 			// 아래 규칙들은 개인 선호에 따라 prettier 문법 적용
 			// https://prettier.io/docs/en/options.html
 			{
+				endOfLine: 'auto',
 				singleQuote: true,
 				semi: false,
 				useTabs: true,
@@ -27,15 +28,21 @@ module.exports = {
 				printWidth: 140,
 				bracketSpacing: true,
 				arrowParens: 'avoid',
-				endOfLine: 'auto',
 			},
 		],
 		'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
 	},
 	// // Parsing error: Unexpected token import 에러 방지를 위한 babel-eslint 적용
+	// parser: "babel-eslint",
+	// parserOptions: {
+	//     sourceType: "module",
+	//     allowImportExportEverywhere: false,
+	//     codeFrame: true,
+	// },
+	parser: 'vue-eslint-parser',
 	parserOptions: {
 		parser: 'babel-eslint',
+		ecmaVersion: 2020,
 		sourceType: 'module',
-		allowImportExportEverywhere: true,
 	},
 }
